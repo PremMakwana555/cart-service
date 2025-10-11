@@ -1,13 +1,13 @@
 package com.ecommerce.cart_service.controller;
 
-import com.ecommerce.cart_service.dto.CartRequest;
+import com.ecommerce.cart_service.dto.CartItemRequest;
 import com.ecommerce.cart_service.dto.CartResponse;
 import com.ecommerce.cart_service.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-package com.ecommerce.cart_service.model;
+
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/cart")
 public class CartController {
     @Autowired
     private CartService cartService;
@@ -17,12 +17,17 @@ public class CartController {
         return cartService.getCart(userId);
     }
 
-    @PostMapping
-    public CartResponse addToCart(@RequestBody CartRequest request) {
-        return cartService.addToCart(request);
+    @PostMapping("/{userId}/items")
+    public CartResponse addItemToCart(@PathVariable String userId, @RequestBody CartItemRequest itemRequest) {
+        return cartService.addItemToCart(userId, itemRequest);
     }
 
-    @DeleteMapping("/{userId}/item/{productId}")
+    @PutMapping("/{userId}/items/{productId}")
+    public CartResponse updateCartItem(@PathVariable String userId, @PathVariable String productId, @RequestBody CartItemRequest itemRequest) {
+        return cartService.updateCartItem(userId, productId, itemRequest);
+    }
+
+    @DeleteMapping("/{userId}/items/{productId}")
     public CartResponse removeItem(@PathVariable String userId, @PathVariable String productId) {
         return cartService.removeItem(userId, productId);
     }
@@ -31,17 +36,9 @@ public class CartController {
     public void clearCart(@PathVariable String userId) {
         cartService.clearCart(userId);
     }
-}
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.List;
-
-@Document(collection = "carts")
-public class Cart {
-    @Id
-    private String id;
-    private String userId;
-    private List<CartItem> items;
-    // getters and setters
+    @PostMapping("/{userId}/checkout")
+    public void checkout(@PathVariable String userId) {
+        cartService.checkout(userId);
+    }
 }
