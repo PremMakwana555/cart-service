@@ -1,10 +1,17 @@
 package com.ecommerce.cart_service.model;
 
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "carts")
 public class Cart {
     @Id
@@ -15,4 +22,13 @@ public class Cart {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     // getters and setters
+
+    public Cart(String userId) {
+        this.userId = userId;
+        this.items = items != null ? items : new java.util.ArrayList<>();
+        this.totalAmount = 0.0;
+        this.createdAt = java.time.LocalDateTime.now();
+        this.updatedAt = java.time.LocalDateTime.now();
+        this.id = null;
+    }
 }

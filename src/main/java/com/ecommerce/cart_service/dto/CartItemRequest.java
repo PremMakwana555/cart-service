@@ -1,11 +1,13 @@
 package com.ecommerce.cart_service.dto;
 
-public class CartItemRequest {
-    private String productId;
-    private int quantity;
-    private double price;
-    private Byte[] productImage; // Image as byte array
-    private String productName;
-    private Boolean available;
-    // getters and setters
-}
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
+public record CartItemRequest(
+
+    @NotBlank
+    String productId,
+
+    @Min(1)
+    int quantity
+) {}

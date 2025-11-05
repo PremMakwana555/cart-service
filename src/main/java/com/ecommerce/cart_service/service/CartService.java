@@ -11,7 +11,7 @@ public interface CartService {
     CartResponse addToCart(CartRequest request);
 
     // New endpoints aligned with CartController
-    CartResponse addItemToCart(String userId, CartItemRequest itemRequest);
+    CartResponse addItemToCart(String userId, CartItemRequest cartItemRequest);
 
     CartResponse updateCartItem(String userId, String productId, CartItemRequest itemRequest);
 

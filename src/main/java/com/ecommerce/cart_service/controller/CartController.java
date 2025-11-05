@@ -4,11 +4,18 @@ import com.ecommerce.cart_service.dto.CartItemRequest;
 import com.ecommerce.cart_service.dto.CartResponse;
 import com.ecommerce.cart_service.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
+
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/cart")
-public class CartController {
+@Validated
+public class  CartController {
     @Autowired
     private CartService cartService;
 
@@ -17,9 +24,13 @@ public class CartController {
         return cartService.getCart(userId);
     }
 
-    @PostMapping("/{userId}/items")
-    public CartResponse addItemToCart(@PathVariable String userId, @RequestBody CartItemRequest itemRequest) {
-        return cartService.addItemToCart(userId, itemRequest);
+    @PostMapping("/items")
+    public CartResponse addItemToCart(Principal principal, @RequestBody CartItemRequest cartItemRequest) {
+        if (principal == null || principal.getName() == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing user principal");
+        }
+        String userId = principal.getName();
+        return cartService.addItemToCart(userId, cartItemRequest);
     }
 
     @PutMapping("/{userId}/items/{productId}")
