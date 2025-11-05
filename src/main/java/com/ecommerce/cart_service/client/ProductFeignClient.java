@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "${product.service.name}", url = "${product.service.url:}")
+// If product.service.url is unset, the url placeholder resolves to null and Feign uses the service name (Eureka)
 public interface ProductFeignClient {
     @GetMapping("${product.service.api.products}/{id}")
     ProductDetails getProductById(@PathVariable("id") String id);
