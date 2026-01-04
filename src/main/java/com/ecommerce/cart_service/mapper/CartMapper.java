@@ -14,26 +14,25 @@ import java.util.stream.Collectors;
 public class CartMapper {
     public static CartResponse toResponse(Cart cart) {
         // map Cart to CartResponse
-        List<CartItemResponse> cartItems = cart.getItems().stream().map(cartItem -> {
+        List<CartItemResponse> cartItems = cart.getItems().stream().map(item -> {
             return new CartItemResponse(
-                cartItem.getProductId(),
-                cartItem.getQuantity(),
-                cartItem.getPrice(),
-                cartItem.getProductImage(),
-                cartItem.getProductName(),
-                cartItem.getAvailable()
-            );
+                    item.getProductId(),
+                    item.getQuantity(),
+                    item.getPrice(),
+                    item.getImageUrl(),
+                    item.getProductName(),
+                    item.getAvailable());
         }).toList();
         CartResponse response = new CartResponse(
-            cart.getId(),
-            cart.getUserId(),
-            cartItems, // Assuming items are already in the correct format
-            cart.getTotalAmount(),
-            cart.getCreatedAt(),
-            cart.getUpdatedAt()
-        );
+                cart.getId(),
+                cart.getUserId(),
+                cartItems, // Assuming items are already in the correct format
+                cart.getTotalAmount(),
+                cart.getCreatedAt(),
+                cart.getUpdatedAt());
         return response;
     }
+
     public static Cart toEntity(CartRequest cartRequest) {
         // map CartRequest to Cart
         Cart cart = new Cart();

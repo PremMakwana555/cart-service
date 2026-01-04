@@ -1,9 +1,34 @@
 spring:
+  security:
+    user:
+      name: user1
+      password: password
   application:
     name: cart-service
-  mongodb:
-    uri: "mongodb+srv://pmakwanaoonam10_prem:pTJrErc4H5jlN2r7@ecommerce.cdezlr7.mongodb.net/cart_service_db"
-    database: cart_service_db
+  data:
+    mongodb:
+      uri: mongodb://admin:admin@localhost:27017/cart_service_db?authSource=admin
+      database: cart_service_db
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 3
+    discovery:
+      enabled: true
+    loadbalancer:
+      retry:
+        enabled: true
   cloud:
     discovery:
       enabled: true
@@ -13,6 +38,11 @@ spring:
 
 server:
   port: 8081
+
+# Kafka Topics
+kafka:
+  topics:
+    cart-events: cart.events
 
 logging:
   level:
@@ -53,7 +83,7 @@ product:
     # If true, prefer discovery (service name) over direct URL when both available.
     use-discovery: true
     api:
-      products: /products
+      products: /product
 
 # Feign client configuration (defaults for all clients)
 feign:

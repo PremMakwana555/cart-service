@@ -7,7 +7,8 @@ import com.ecommerce.cart_service.model.CartItem;
 
 public class CartItemMapper {
     public static CartItem toEntity(CartItemRequest request) {
-        if (request == null) return null;
+        if (request == null)
+            return null;
         CartItem item = new CartItem();
         item.setProductId(request.productId());
         item.setQuantity(request.quantity());
@@ -22,9 +23,10 @@ public class CartItemMapper {
         }
         if (product != null) {
             item.setPrice(product.price());
-            item.setProductImage(product.productImage());
-            item.setProductName(product.productName());
-            item.setAvailable(product.available());
+            item.setImageUrl(product.imageUrl());
+            item.setProductName(product.name());
+            // Default to true if null, as ProductService doesn't send this field
+            item.setAvailable(product.available() != null ? product.available() : true);
             // ensure productId aligns with product if request omitted or different
             if (item.getProductId() == null || item.getProductId().isEmpty()) {
                 item.setProductId(product.productId());
@@ -34,14 +36,14 @@ public class CartItemMapper {
     }
 
     public static CartItemResponse toDto(CartItem item) {
-        if (item == null) return null;
+        if (item == null)
+            return null;
         return new CartItemResponse(
-            item.getProductId(),
-            item.getQuantity(),
-            item.getPrice(),
-            item.getProductImage(),
-            item.getProductName(),
-            item.getAvailable()
-        );
+                item.getProductId(),
+                item.getQuantity(),
+                item.getPrice(),
+                item.getImageUrl(),
+                item.getProductName(),
+                item.getAvailable());
     }
 }

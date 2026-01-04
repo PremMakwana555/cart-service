@@ -21,6 +21,10 @@ public class Cart {
     private Double totalAmount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @org.springframework.data.annotation.Version
+    private Long version;
+
     // getters and setters
 
     public Cart(String userId) {

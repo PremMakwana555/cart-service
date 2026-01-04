@@ -11,7 +11,7 @@ public class CartItem {
     private String productId;
     private int quantity;
     private double price;
-    private Byte[] productImage;
+    private String imageUrl;
     private String productName;
     private Boolean available;
     // getters and setters
