@@ -18,7 +18,7 @@ public class Cart {
     private String id;
     private String userId;
     private List<CartItem> items;
-    private Double totalAmount;
+    private java.math.BigDecimal totalAmount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -30,7 +30,7 @@ public class Cart {
     public Cart(String userId) {
         this.userId = userId;
         this.items = items != null ? items : new java.util.ArrayList<>();
-        this.totalAmount = 0.0;
+        this.totalAmount = java.math.BigDecimal.ZERO;
         this.createdAt = java.time.LocalDateTime.now();
         this.updatedAt = java.time.LocalDateTime.now();
         this.id = null;

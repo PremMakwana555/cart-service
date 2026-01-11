@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 public class SimplePricingStrategy implements PricingStrategy {
 
     @Override
-    public double calculateTotal(Cart cart) {
+    public java.math.BigDecimal calculateTotal(Cart cart) {
         if (cart == null || cart.getItems() == null) {
-            return 0.0;
+            return java.math.BigDecimal.ZERO;
         }
         return cart.getItems().stream()
-                .mapToDouble(item -> item.getPrice() * item.getQuantity())
-                .sum();
+                .map(item -> item.getPrice().multiply(java.math.BigDecimal.valueOf(item.getQuantity())))
+                .reduce(java.math.BigDecimal.ZERO, java.math.BigDecimal::add);
     }
 }

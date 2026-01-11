@@ -29,7 +29,7 @@ public class CartItemMapper {
             item.setAvailable(product.available() != null ? product.available() : true);
             // ensure productId aligns with product if request omitted or different
             if (item.getProductId() == null || item.getProductId().isEmpty()) {
-                item.setProductId(product.productId());
+                item.setProductId(String.valueOf(product.id()));
             }
         }
         return item;

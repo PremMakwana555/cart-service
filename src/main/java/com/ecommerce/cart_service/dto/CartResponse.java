@@ -1,14 +1,14 @@
 package com.ecommerce.cart_service.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public record CartResponse(
-    String id,
-    String userId,
-    List<CartItemResponse> items,
-    Double totalAmount,
-    LocalDateTime createdAt,
-    LocalDateTime updatedAt
-) {}
-
+        String id,
+        String userId,
+        List<CartItemResponse> items,
+        BigDecimal totalAmount,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt) {
+}

@@ -124,7 +124,7 @@ public class CartServiceImpl implements CartService {
 
         if (cart != null) {
             cart.getItems().clear();
-            cart.setTotalAmount(0.0);
+            cart.setTotalAmount(java.math.BigDecimal.ZERO);
             cart.setUpdatedAt(LocalDateTime.now());
             cartRepository.save(cart);
         }
@@ -143,7 +143,7 @@ public class CartServiceImpl implements CartService {
     }
 
     private void recalculateTotal(Cart cart) {
-        double total = pricingStrategy.calculateTotal(cart);
+        java.math.BigDecimal total = pricingStrategy.calculateTotal(cart);
         cart.setTotalAmount(total);
     }
 }

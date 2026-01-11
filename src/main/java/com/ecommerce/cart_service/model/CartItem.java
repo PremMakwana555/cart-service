@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class CartItem {
     private String productId;
     private int quantity;
-    private double price;
+    private java.math.BigDecimal price;
     private String imageUrl;
     private String productName;
     private Boolean available;

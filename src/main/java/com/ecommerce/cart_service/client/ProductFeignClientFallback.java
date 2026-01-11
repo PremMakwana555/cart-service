@@ -7,7 +7,12 @@ import org.springframework.stereotype.Component;
 public class ProductFeignClientFallback implements ProductFeignClient {
     @Override
     public ProductDetails getProductById(String id) {
-        // Fallback: return valid structure but with "unavailable" status
-        return new ProductDetails(id, 0.0, null, "ServiceName Unavailable", false);
+        Long parsedId = null;
+        try {
+            parsedId = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            // log error or keep null
+        }
+        return new ProductDetails(parsedId, java.math.BigDecimal.ZERO, null, "ServiceName Unavailable", false);
     }
 }

@@ -61,8 +61,8 @@ class CartServiceTest {
     void addItemToCart_NewItem_Success() {
         when(cartRepository.findByUserId("user1")).thenReturn(Optional.of(cart));
         when(productService.fetchProduct("prod1"))
-                .thenReturn(new ProductDetails("prod1", 100.0, null, "Product 1", true));
-        when(pricingStrategy.calculateTotal(any(Cart.class))).thenReturn(200.0);
+                .thenReturn(new ProductDetails(1L, java.math.BigDecimal.valueOf(100.0), null, "Product 1", true));
+        when(pricingStrategy.calculateTotal(any(Cart.class))).thenReturn(java.math.BigDecimal.valueOf(200.0));
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
 
         CartItemRequest request = new CartItemRequest("prod1", 2);
@@ -74,12 +74,12 @@ class CartServiceTest {
 
     @Test
     void addItemToCart_ExistingItem_IncrementsQuantity() {
-        CartItem item = new CartItem("prod1", 1, 100.0, null, "Product 1", true);
+        CartItem item = new CartItem("prod1", 1, java.math.BigDecimal.valueOf(100.0), null, "Product 1", true);
         cart.getItems().add(item);
-        cart.setTotalAmount(100.0);
+        cart.setTotalAmount(java.math.BigDecimal.valueOf(100.0));
 
         when(cartRepository.findByUserId("user1")).thenReturn(Optional.of(cart));
-        when(pricingStrategy.calculateTotal(any(Cart.class))).thenReturn(300.0);
+        when(pricingStrategy.calculateTotal(any(Cart.class))).thenReturn(java.math.BigDecimal.valueOf(300.0));
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
 
         CartItemRequest request = new CartItemRequest("prod1", 2);
@@ -92,12 +92,12 @@ class CartServiceTest {
 
     @Test
     void updateCartItem_Success() {
-        CartItem item = new CartItem("prod1", 1, 100.0, null, "Product 1", true);
+        CartItem item = new CartItem("prod1", 1, java.math.BigDecimal.valueOf(100.0), null, "Product 1", true);
         cart.getItems().add(item);
-        cart.setTotalAmount(100.0);
+        cart.setTotalAmount(java.math.BigDecimal.valueOf(100.0));
 
         when(cartRepository.findByUserId("user1")).thenReturn(Optional.of(cart));
-        when(pricingStrategy.calculateTotal(any(Cart.class))).thenReturn(500.0);
+        when(pricingStrategy.calculateTotal(any(Cart.class))).thenReturn(java.math.BigDecimal.valueOf(500.0));
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
 
         CartItemRequest request = new CartItemRequest("prod1", 5);
@@ -109,12 +109,12 @@ class CartServiceTest {
 
     @Test
     void removeItem_Success() {
-        CartItem item = new CartItem("prod1", 1, 100.0, null, "Product 1", true);
+        CartItem item = new CartItem("prod1", 1, java.math.BigDecimal.valueOf(100.0), null, "Product 1", true);
         cart.getItems().add(item);
-        cart.setTotalAmount(100.0);
+        cart.setTotalAmount(java.math.BigDecimal.valueOf(100.0));
 
         when(cartRepository.findByUserId("user1")).thenReturn(Optional.of(cart));
-        when(pricingStrategy.calculateTotal(any(Cart.class))).thenReturn(0.0);
+        when(pricingStrategy.calculateTotal(any(Cart.class))).thenReturn(java.math.BigDecimal.valueOf(0.0));
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
 
         cartService.removeItem("user1", "prod1");
@@ -124,9 +124,9 @@ class CartServiceTest {
 
     @Test
     void clearCart_Success() {
-        CartItem item = new CartItem("prod1", 1, 100.0, null, "Product 1", true);
+        CartItem item = new CartItem("prod1", 1, java.math.BigDecimal.valueOf(100.0), null, "Product 1", true);
         cart.getItems().add(item);
-        cart.setTotalAmount(100.0);
+        cart.setTotalAmount(java.math.BigDecimal.valueOf(100.0));
 
         when(cartRepository.findByUserId("user1")).thenReturn(Optional.of(cart));
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
@@ -140,9 +140,9 @@ class CartServiceTest {
 
     @Test
     void checkout_ClearsCart() {
-        CartItem item = new CartItem("prod1", 1, 100.0, null, "Product 1", true);
+        CartItem item = new CartItem("prod1", 1, java.math.BigDecimal.valueOf(100.0), null, "Product 1", true);
         cart.getItems().add(item);
-        cart.setTotalAmount(100.0);
+        cart.setTotalAmount(java.math.BigDecimal.valueOf(100.0));
 
         when(cartRepository.findByUserId("user1")).thenReturn(Optional.of(cart));
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
